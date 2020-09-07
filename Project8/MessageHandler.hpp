@@ -8,30 +8,76 @@ namespace mlcp
 	typedef std::vector<SerializeCallBack> SerializeHandlersPool;
 	typedef std::vector<SerializeCallBack> DeserializeHandlersPool;
 
+	inline SerializeHandlersPool& getSerializers()
+	{
+		static SerializeHandlersPool serializeHandlers;
+		return serializeHandlers;
+	}
+
+	inline DeserializeHandlersPool& getDeserializers()
+	{
+		static DeserializeHandlersPool deserializeHandlers;
+		return deserializeHandlers;
+	}
+
+	template<typename T>
+	static std::string runSerializeHandler(const msgType& type, const T msg)
+	{
+		return getSerializers()[type]->serialize(msg);
+	}
+
+	template<typename T>
+	static std::string runSerializeHandler(const msgType& type, std::shared_ptr<T> msg)
+	{
+		return runSerializeHandler(type, msg.get());
+	}
+
+	template<typename T>
+	static std::string runSerializeHandler(const msgType& type, std::unique_ptr<T> msg)
+	{
+		return runSerializeHandler(type, msg.get());
+	}
+
+	static GeneralMessagePtr runDesrializeHandler(const msgType& type, const std::string str)
+	{
+		return getDeserializers()[type]->deserialize(str);
+	}
+
+	template<typename Class>
 	class MessageHandler
 	{
 	private:
-		SerializeHandlersPool _serializeHandlers;
-		DeserializeHandlersPool _deserializeHandlers;
-
-		MessageHandler();
+		MessageHandler()
+		{
+			getDeserializers().emplace_back(std::make_shared<SerializerFunctionPointer<Class>>(std::function<templateMessagePtr<Class>(const std::string&)>(MessageSerializer::deserializeMsg<Class>)));
+			getSerializers().emplace_back(std::make_shared<SerializerFunctionPointer<Class>>());
+		}
 
 	public:
-		static MessageHandler& instance()
+		static MessageHandler<Class>& instance()
 		{
-			static MessageHandler instance;
+			static MessageHandler<Class> instance;
 			return instance;
-		}
-
-		template<typename T>
-		std::string runSerializeHandler(const msgType& type, const T msg)
-		{
-			return _serializeHandlers[type]->serialize(msg);
-		}
-
-		GeneralMessagePtr runDesrializeHandler(const msgType& type, const std::string str)
-		{
-			return _deserializeHandlers[type]->deserialize(str);
 		}
 	};
 }
+
+#define MESSAGE_REGISTER(TYPE)												  \
+    namespace mlcpreg {	                                                      \
+    namespace                                                                 \
+    {                                                                         \
+        template<class T>                                                     \
+        class MessageRegistration;											  \
+                                                                              \
+        template<>                                                            \
+        class MessageRegistration<TYPE>										  \
+        {                                                                     \
+            static const ::mlcp::MessageHandler<TYPE>& reg;					  \
+        };                                                                    \
+                                                                              \
+        const ::mlcp::MessageHandler<TYPE>&									  \
+			MessageRegistration<TYPE>::reg =                                  \
+                ::mlcp::MessageHandler<TYPE>::instance();					  \
+    }}
+
+MESSAGE_REGISTER(mlcp::GeneralMessage);

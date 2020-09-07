@@ -1,5 +1,5 @@
 #pragma once
-#include "GeneralMessage.hpp"
+#include "MessageHandler.hpp"
 
 namespace mlcp
 {
@@ -26,4 +26,6 @@ namespace mlcp
 			: GeneralMessage(TYPE_CONNECT_MSG), _username(username), _password(password)
 		{}
 	};
+
+	MESSAGE_REGISTER(ConnectMessage);
 }

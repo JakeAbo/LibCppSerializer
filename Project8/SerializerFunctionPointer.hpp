@@ -1,12 +1,12 @@
 #pragma once
 #include <memory>
-#include "ConnectMessage.hpp"
+#include "GeneralMessage.hpp"
 
 namespace mlcp
 {
-	typedef std::shared_ptr<GeneralMessage> GeneralMessagePtr;
+	typedef GeneralMessage* GeneralMessagePtr;
 	template<typename T>
-	using templateMessagePtr = std::shared_ptr<T>;
+	using templateMessagePtr = T*;
 
 	class SerializerFunctionPointerBase
 	{
@@ -36,7 +36,7 @@ namespace mlcp
 		{
 			std::ostringstream os;
 			boost::archive::binary_oarchive ia(os);
-			auto temp = std::static_pointer_cast<T>(msg);
+			auto temp = static_cast<T*>(msg);
 			ia << temp;
 			return os.str() += temp->getType();
 		}

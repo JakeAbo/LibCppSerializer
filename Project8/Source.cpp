@@ -2,6 +2,8 @@
 #include <sstream>
 #include <vector>
 #include "MessageSerializer.hpp"
+#include "GeneralMessage.hpp"
+#include "ConnectMessage.hpp"
 
 void main()
 {
@@ -15,7 +17,7 @@ void main()
 	std::string msgstr = a.serializeMsg(msg1);
 
 	mlcp::GeneralMessagePtr n = a.deserializeMsg(msgstr);
-	std::shared_ptr<mlcp::ConnectMessage> nn = std::static_pointer_cast<mlcp::ConnectMessage>(n);
+	mlcp::ConnectMessage* nn = static_cast<mlcp::ConnectMessage*>(n);
 
 	std::cout << std::endl;
 	int x;

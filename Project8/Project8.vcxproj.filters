@@ -21,7 +21,7 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MessageHandler.cpp">
+    <ClCompile Include="GeneralMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
