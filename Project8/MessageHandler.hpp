@@ -43,6 +43,22 @@ namespace mlcp
 		return getDeserializers()[type]->deserialize(str);
 	}
 
+	template<typename T>
+	static const msgType getMessageType()
+	{
+		size_t i;
+		
+		for (i = 0; i < getSerializers().size(); i++)
+		{
+			std::shared_ptr<SerializerFunctionPointerBase> temp = getSerializers()[i];
+			auto check = std::dynamic_pointer_cast<SerializerFunctionPointer<T>>(temp);
+			if (check != nullptr) return static_cast<msgType>(i);
+		}
+		
+		std::cout << "unregistered type" << std::endl;
+		return TYPE_GENERAL_MSG;
+	}
+
 	template<typename Class>
 	class MessageHandler
 	{

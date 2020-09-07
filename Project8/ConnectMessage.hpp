@@ -23,7 +23,7 @@ namespace mlcp
 
 	public:
 		ConnectMessage(const std::string username = "", const std::string password = "")
-			: GeneralMessage(TYPE_CONNECT_MSG), _username(username), _password(password)
+			: GeneralMessage(mlcp::getMessageType<ConnectMessage>()), _username(username), _password(password)
 		{}
 	};
 
