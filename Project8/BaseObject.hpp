@@ -11,13 +11,16 @@
 #include "boost\serialization\shared_ptr.hpp"
 #include "boost\serialization\vector.hpp"
 #include "boost\serialization\base_object.hpp"
+#include "boost\optional\optional.hpp"
+#include "boost\serialization\optional.hpp"
+#include "ObjectSerializationException.hpp"
 
-namespace mlcp
+namespace objserialization
 {
-	typedef unsigned int msgType;
-	static const msgType TYPE_GENERAL_MSG = 0;
+	typedef boost::optional<unsigned int> objType;
+	static const objType TYPE_BASE_OBJ = 0;
 		
-	class GeneralMessage
+	class BaseObject
 	{
 	private:
 		friend class boost::serialization::access;
@@ -28,13 +31,15 @@ namespace mlcp
 		}
 
 	protected:
-		msgType _type;
+		objType _type;
 		
 	public:
-		GeneralMessage(const msgType& type = TYPE_GENERAL_MSG) : _type(type) {}
-		const msgType& getType()
+		BaseObject(const objType& type = TYPE_BASE_OBJ) : _type(type) {}
+		const objType& getType()
 		{
-			return _type;
+			if(_type.has_value())
+				return _type;
+			throw ObjectSerializationException(ExceptionMessageType::EXCEPTION_TYPE);
 		}
 	};
 }

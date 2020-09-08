@@ -23,19 +23,22 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GeneralMessage.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ConnectMessage.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MessageSerializer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MessageHandler.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SerializerFunctionPointer.hpp">
+      <Filter>Header Files\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseObject.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectSerializer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectRegistry.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectSerializationException.hpp">
       <Filter>Header Files\Helpers</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,18 +1,18 @@
 #pragma once
-#include "MessageHandler.hpp"
+#include "ObjectRegistry.hpp"
 
-namespace mlcp
+namespace objserialization
 {
-	static const msgType TYPE_CONNECT_MSG = 1;
+	static const objType TYPE_CONNECT_MSG = 1;
 
-	class ConnectMessage : public GeneralMessage
+	class ConnectMessage : public BaseObject
 	{
 	private:
 		friend class boost::serialization::access;
 		template<class Archive>
 		void serialize(Archive &ar, const unsigned int /*version*/)
 		{
-			ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(GeneralMessage);
+			ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(BaseObject);
 			ar & BOOST_SERIALIZATION_NVP(_username);
 			ar & BOOST_SERIALIZATION_NVP(_password);
 		}
@@ -23,9 +23,9 @@ namespace mlcp
 
 	public:
 		ConnectMessage(const std::string username = "", const std::string password = "")
-			: GeneralMessage(mlcp::getMessageType<ConnectMessage>()), _username(username), _password(password)
+			: BaseObject(objserialization::getObjectType<ConnectMessage>()), _username(username), _password(password)
 		{}
 	};
 
-	MESSAGE_REGISTER(ConnectMessage);
+	//OBJECT_REGISTER(ConnectMessage);
 }
