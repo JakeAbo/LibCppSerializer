@@ -7,17 +7,15 @@
 
 void main()
 {
-	objserialization::ObjectSerializer a = objserialization::ObjectSerializer::instance();
-
 	std::vector<objserialization::BaseObject*> msgs;
 	msgs.push_back(new objserialization::ConnectMessage("jack", "123"));
 
 	std::shared_ptr<objserialization::BaseObject> msg1 = std::make_shared<objserialization::ConnectMessage>("11", "22");
 
-	std::string msgstr = a.serializeObj(msg1);
+	std::string msgstr = objserialization::serialize(msg1);
 
-	objserialization::BaseObjectPtr n = a.deserializeObj(msgstr);
-	objserialization::ConnectMessage* nn = static_cast<objserialization::ConnectMessage*>(n);
+	auto n = objserialization::deserialize(msgstr);
+	auto n2 = objserialization::deserialize<objserialization::ConnectMessage>(msgstr);
 
 	std::cout << std::endl;
 	int x;

@@ -27,5 +27,5 @@ namespace objserialization
 		{}
 	};
 
-	//OBJECT_REGISTER(ConnectMessage);
+	OBJECT_REGISTER(ConnectMessage);
 }
