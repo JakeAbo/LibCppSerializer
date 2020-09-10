@@ -7,15 +7,8 @@ namespace objserialization
 {
 	class ObjectSerializer
 	{
-	public:
-		ObjectSerializer(ObjectSerializer const&) = delete;
-		void operator=(ObjectSerializer const&) = delete;
-
-		static ObjectSerializer& instance()
-		{
-			static ObjectSerializer instance;
-			return instance;
-		}
+		template<typename>
+		friend class ObjectRegistry;
 
 		template<class T>
 		static const std::string serializeObj(const T obj)
@@ -45,25 +38,23 @@ namespace objserialization
 			
 			return objserialization::runDesrializeHandler(type, substr);
 		}
-	
-	private:
-		ObjectSerializer() = default;
+		
+	public:
+		template<class T>
+		static const std::string serialize(const T obj)
+		{
+			return objserialization::ObjectSerializer::serializeObj(obj);
+		}
+
+		template<class T>
+		static templateObjectPtr<T> deserialize(const std::string& str)
+		{
+			return objserialization::ObjectSerializer::deserializeObj<T>(str);
+		}
+
+		static BaseObjectPtr deserialize(const std::string& str)
+		{
+			return objserialization::ObjectSerializer::deserializeObj(str);
+		}
 	};
-
-	template<class T>
-	static const std::string serialize(const T obj)
-	{
-		return objserialization::ObjectSerializer::instance().serializeObj(obj);
-	}
-
-	template<class T>
-	static templateObjectPtr<T> deserialize(const std::string& str)
-	{
-		return objserialization::ObjectSerializer::instance().deserializeObj<T>(str);
-	}
-
-	static BaseObjectPtr deserialize(const std::string& str)
-	{
-		return objserialization::ObjectSerializer::instance().deserializeObj(str);
-	}
 }

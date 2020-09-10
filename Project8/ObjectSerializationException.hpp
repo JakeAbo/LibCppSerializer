@@ -7,7 +7,7 @@ namespace objserialization
 	enum class ExceptionMessageType
 	{
 		EXCEPTION_REGISTERY,
-		EXCEPTION_TYPE,
+		EXCEPTION_TYPE
 	};
 
 	class ExceptionMessages
