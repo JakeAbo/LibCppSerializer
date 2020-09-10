@@ -1,5 +1,4 @@
-#pragma once
-#include "ObjectRegistry.hpp"
+#include "libcppserializer/ObjectSerializer.hpp"
 
 class Person : public objserialization::BaseObject
 {
@@ -24,3 +23,17 @@ public:
 };
 
 OBJECT_REGISTER(Person);
+
+void main()
+{
+	std::shared_ptr<objserialization::BaseObject> p1 = std::make_shared<Person>("jack", 23);
+
+	std::string p1serialized = objserialization::ObjectSerializer::serialize(p1);
+
+	auto baseP1Deserialized = objserialization::ObjectSerializer::deserialize(p1serialized);
+	auto p1deserialized = objserialization::ObjectSerializer::deserialize<Person>(p1serialized);
+
+	std::cout << std::endl;
+	int x;
+	std::cin >> x;
+}
