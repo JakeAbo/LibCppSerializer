@@ -79,7 +79,7 @@ namespace objserialization
 }
 
 #define OBJECT_REGISTER(TYPE)												  \
-    namespace mlcpreg {	                                                      \
+    namespace objreg {	                                                      \
     namespace                                                                 \
     {                                                                         \
         template<class T>                                                     \
