@@ -19,29 +19,33 @@ namespace objserialization
 		static DeserializeHandlersPool deserializeHandlers;
 		return deserializeHandlers;
 	}
-
-	template<typename T>
-	static std::string runSerializeHandler(const objType& type, const T obj)
+	
+	class ObjectHandler
 	{
-		return getSerializers()[type.value()]->serialize(obj);
-	}
+	public:
+		template<typename T>
+		static std::string runSerializeHandler(const objType& type, const T obj)
+		{
+			return getSerializers()[type.value()]->serialize(obj);
+		}
 
-	template<typename T>
-	static std::string runSerializeHandler(const objType& type, std::shared_ptr<T> obj)
-	{
-		return runSerializeHandler(type, obj.get());
-	}
+		template<typename T>
+		static std::string runSerializeHandler(const objType& type, std::shared_ptr<T> obj)
+		{
+			return runSerializeHandler(type, obj.get());
+		}
 
-	template<typename T>
-	static std::string runSerializeHandler(const objType& type, std::unique_ptr<T> obj)
-	{
-		return runSerializeHandler(type, obj.get());
-	}
+		template<typename T>
+		static std::string runSerializeHandler(const objType& type, std::unique_ptr<T> obj)
+		{
+			return runSerializeHandler(type, obj.get());
+		}
 
-	static BaseObjectPtr runDesrializeHandler(const objType& type, const std::string str)
-	{
-		return getDeserializers()[type.value()]->deserialize(str);
-	}
+		static BaseObjectPtr runDesrializeHandler(const objType& type, const std::string str)
+		{
+			return getDeserializers()[type.value()]->deserialize(str);
+		}
+	};
 
 	template<typename T>
 	static const objType getObjectType()

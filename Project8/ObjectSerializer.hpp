@@ -13,7 +13,7 @@ namespace objserialization
 		template<class T>
 		static const std::string serializeObj(const T obj)
 		{
-			return objserialization::runSerializeHandler(obj->getType(), obj);
+			return objserialization::ObjectHandler::runSerializeHandler(obj->getType(), obj);
 		}
 				
 		template<class T>
@@ -36,7 +36,7 @@ namespace objserialization
 			type = (objType)(str[index]);
 			substr = str.substr(0, index);
 			
-			return objserialization::runDesrializeHandler(type, substr);
+			return objserialization::ObjectHandler::runDesrializeHandler(type, substr);
 		}
 		
 	public:
