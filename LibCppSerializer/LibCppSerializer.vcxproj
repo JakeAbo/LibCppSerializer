@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{33E81360-E0B2-40A4-A314-F47E6840C203}</ProjectGuid>
-    <RootNamespace>Example1</RootNamespace>
+    <ProjectGuid>{6C942879-F2E2-4FF4-AB2F-FF69C342E8F0}</ProjectGuid>
+    <RootNamespace>LibCppSerializer</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -76,7 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(projectdir)\..\..\..\;C:\Users\Jack\Documents\persons\jack\Programming\Libraries\boost_1_70_0\boost_1_70_0;C:\Users\Jack\Documents\persons\jack\Programming\Libraries\boost_1_70_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Jack\Documents\persons\jack\Programming\Libraries\boost_1_70_0\boost_1_70_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -127,7 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Example1.cpp" />
+    <ClInclude Include="BaseObject.hpp" />
+    <ClInclude Include="ObjectRegistry.hpp" />
+    <ClInclude Include="ObjectSerializationException.hpp" />
+    <ClInclude Include="ObjectSerializer.hpp" />
+    <ClInclude Include="SerializerFunctionPointer.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
