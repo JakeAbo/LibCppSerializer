@@ -132,6 +132,7 @@
   <ItemGroup>
     <ClInclude Include="BaseObject.hpp" />
     <ClInclude Include="ObjectRegistry.hpp" />
+    <ClInclude Include="ObjectSerializationArchives.hpp" />
     <ClInclude Include="ObjectSerializationException.hpp" />
     <ClInclude Include="ObjectSerializer.hpp" />
     <ClInclude Include="SerializerFunctionPointer.hpp" />

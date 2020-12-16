@@ -7,7 +7,8 @@ namespace objserialization
 	enum class ExceptionMessageType
 	{
 		EXCEPTION_REGISTERY,
-		EXCEPTION_TYPE
+		EXCEPTION_TYPE,
+		EXCEPTION_UNKNOWN_ARCHIVE_TYPE
 	};
 
 	class ExceptionMessages
@@ -21,7 +22,8 @@ namespace objserialization
 			if (msgs.empty())
 			{
 				msgs.insert(std::make_pair<ExceptionMessageType, const std::string>(ExceptionMessageType::EXCEPTION_REGISTERY,	"Class registery failed"));
-				msgs.insert(std::make_pair<ExceptionMessageType, const std::string>(ExceptionMessageType::EXCEPTION_TYPE,		"Class type is undefined"));
+				msgs.insert(std::make_pair<ExceptionMessageType, const std::string>(ExceptionMessageType::EXCEPTION_TYPE, "Class type is undefined"));
+				msgs.insert(std::make_pair<ExceptionMessageType, const std::string>(ExceptionMessageType::EXCEPTION_UNKNOWN_ARCHIVE_TYPE, "Archive type is unknown"));
 			}
 
 			auto it = msgs.find(msgType);

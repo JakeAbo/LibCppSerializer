@@ -26,10 +26,23 @@ OBJECT_REGISTER(Person);
 
 void main()
 {
+	/*
 	Person* p = new Person("jack", 23);
-	std::string serializedPerson = objserialization::ObjectSerializer::serialize(p);
-	Person* backToPerson = objserialization::ObjectSerializer::deserialize<Person>(serializedPerson);
+	
+	//Text
+	{
+		std::string serializedPerson = objserialization::ObjectSerializer::serialize(p, objserialization::ArchiveType::TEXT);
+		Person* backToPerson = objserialization::ObjectSerializer::deserialize<Person>(serializedPerson, objserialization::ArchiveType::TEXT);
+		delete backToPerson;
+	}
+
+	//Binary
+	{
+		std::string serializedPerson = objserialization::ObjectSerializer::serialize(p, objserialization::ArchiveType::TEXT);
+		Person* backToPerson = objserialization::ObjectSerializer::deserialize<Person>(serializedPerson, objserialization::ArchiveType::TEXT);
+		delete backToPerson;
+	}
 
 	delete p;
-	delete backToPerson;
+	*/
 }

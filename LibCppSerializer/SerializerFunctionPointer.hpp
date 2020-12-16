@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include "BaseObject.hpp"
+#include "ObjectSerializationArchives.hpp"
 
 namespace objserialization
 {
@@ -11,33 +12,49 @@ namespace objserialization
 	class SerializerFunctionPointerBase
 	{
 	public:
-		virtual BaseObjectPtr deserialize(const std::string& serializedObj) = 0;
-		virtual std::string serialize(BaseObjectPtr obj) = 0;
+		virtual BaseObjectPtr deserialize(const std::string& serializedObj, ArchiveType arType) = 0;
+		virtual std::string serialize(BaseObjectPtr obj, ArchiveType arType) = 0;
 	};
 
 	template<typename T>
 	class SerializerFunctionPointer : public SerializerFunctionPointerBase
 	{
 	public:
-		std::function<templateObjectPtr<T>(const std::string&)> _ptr;
+		std::function<templateObjectPtr<T>(const std::string&, ArchiveType arType)> _ptr;
 
-		explicit SerializerFunctionPointer(std::function<templateObjectPtr<T>(const std::string&)> ptr = nullptr)
+		explicit SerializerFunctionPointer(std::function<templateObjectPtr<T>(const std::string&, ArchiveType)> ptr = nullptr)
 			: SerializerFunctionPointerBase(), _ptr(ptr)
 		{}
 
-		BaseObjectPtr deserialize(const std::string& serializedObj) override
+		BaseObjectPtr deserialize(const std::string& serializedObj, ArchiveType arType) override
 		{
 			if(_ptr != nullptr)
-				return _ptr(serializedObj);
+				return _ptr(serializedObj, arType);
 			return nullptr;
 		}
 
-		std::string serialize(BaseObjectPtr obj) override
+		std::string serialize(BaseObjectPtr obj, ArchiveType arType) override
 		{
 			std::ostringstream os;
-			boost::archive::binary_oarchive ia(os);
 			auto temp = static_cast<T*>(obj);
-			ia << temp;
+
+			if (arType == ArchiveType::BINARY)
+			{
+				boost::archive::binary_oarchive ia(os);
+				ia << temp;
+			}
+
+			else if (arType == ArchiveType::TEXT)
+			{
+				boost::archive::text_oarchive ia(os);
+				ia << temp;
+			}
+
+			else
+			{
+				throw ObjectSerializationException(ExceptionMessageType::EXCEPTION_UNKNOWN_ARCHIVE_TYPE);
+			}
+
 			return os.str() += temp->getType().value();
 		}
 	};

@@ -24,26 +24,26 @@ namespace objserialization
 	{
 	public:
 		template<typename T>
-		static std::string runSerializeHandler(const objType& type, const T obj)
+		static std::string runSerializeHandler(const objType& type, const T obj, ArchiveType arType)
 		{
-			return getSerializers()[type.value()]->serialize(obj);
+			return getSerializers()[type.value()]->serialize(obj, arType);
 		}
 
 		template<typename T>
-		static std::string runSerializeHandler(const objType& type, std::shared_ptr<T> obj)
+		static std::string runSerializeHandler(const objType& type, std::shared_ptr<T> obj, ArchiveType arType)
 		{
-			return runSerializeHandler(type, obj.get());
+			return runSerializeHandler(type, obj.get(), arType);
 		}
 
 		template<typename T>
-		static std::string runSerializeHandler(const objType& type, std::unique_ptr<T> obj)
+		static std::string runSerializeHandler(const objType& type, std::unique_ptr<T> obj, ArchiveType arType)
 		{
-			return runSerializeHandler(type, obj.get());
+			return runSerializeHandler(type, obj.get(), arType);
 		}
 
-		static BaseObjectPtr runDesrializeHandler(const objType& type, const std::string str)
+		static BaseObjectPtr runDesrializeHandler(const objType& type, const std::string str, ArchiveType arType)
 		{
-			return getDeserializers()[type.value()]->deserialize(str);
+			return getDeserializers()[type.value()]->deserialize(str, arType);
 		}
 	};
 
@@ -65,7 +65,7 @@ namespace objserialization
 	private:
 		ObjectRegistry()
 		{
-			getDeserializers().emplace_back(std::make_shared<SerializerFunctionPointer<Class>>(std::function<templateObjectPtr<Class>(const std::string&)>(ObjectSerializer::deserializeObj<Class>)));
+			getDeserializers().emplace_back(std::make_shared<SerializerFunctionPointer<Class>>(std::function<templateObjectPtr<Class>(const std::string&, ArchiveType arType)>(ObjectSerializer::deserializeObj<Class>)));
 			getSerializers().emplace_back(std::make_shared<SerializerFunctionPointer<Class>>());
 		}
 
