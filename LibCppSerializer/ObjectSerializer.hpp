@@ -19,24 +19,7 @@ namespace objserialization
 		template<class T>
 		static templateObjectPtr<T> deserializeObj(const std::string& str, ArchiveType arType)
 		{
-			templateObjectPtr<T> result = new T();
-			std::istringstream iss(str);
-			if (arType == ArchiveType::BINARY)
-			{
-				boost::archive::binary_iarchive ia(iss);
-				ia >> result;
-			}
-			else if (arType == ArchiveType::TEXT)
-			{
-				boost::archive::text_iarchive ia(iss);
-				ia >> result;
-			}
-			else
-			{
-				throw ObjectSerializationException(ExceptionMessageType::EXCEPTION_UNKNOWN_ARCHIVE_TYPE);
-			}
-
-			return result;
+			return objserialization::Archives::deserializeArchive<T>(str, arType);
 		}
 
 		static BaseObjectPtr deserializeObj(const std::string& str, ArchiveType arType)

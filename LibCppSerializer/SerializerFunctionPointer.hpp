@@ -38,24 +38,8 @@ namespace objserialization
 			std::ostringstream os;
 			auto temp = static_cast<T*>(obj);
 
-			if (arType == ArchiveType::BINARY)
-			{
-				boost::archive::binary_oarchive ia(os);
-				ia << temp;
-			}
+			return Archives::serializeArchive(temp, arType) += temp->getType().value();
 
-			else if (arType == ArchiveType::TEXT)
-			{
-				boost::archive::text_oarchive ia(os);
-				ia << temp;
-			}
-
-			else
-			{
-				throw ObjectSerializationException(ExceptionMessageType::EXCEPTION_UNKNOWN_ARCHIVE_TYPE);
-			}
-
-			return os.str() += temp->getType().value();
 		}
 	};
 }
