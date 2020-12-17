@@ -16,7 +16,8 @@ Tested on boost version 1.70.
 The library is header-only. 
 
 ## How to use
-Project should include boost library and inc directory of the repository which include all necessary header files of LibCppSerializer.
+1) Project should include boost library and inc directory of the repository which include all necessary header files of LibCppSerializer.
+2) Visual Studio 2019: Right click .Sln -> Properties -> C/C++ -> Language -> Conformance mode *No*
 
 ## Getting Started
 The additions to the standard boost/serialization library are:
@@ -55,8 +56,8 @@ Once class registered, class can be code and decode easily.
 void main()
 {
 	Person *p = new Person("jack", 23);
-	std::string serializedPerson =  objserialization::ObjectSerializer::serialize(p);
-	Person* backToPerson = objserialization::ObjectSerializer::deserialize<Person>(serializedPerson);
+	std::string serializedPerson =  objserialization::ObjectSerializer::serialize(p, objserialization::ArchiveType::TEXT);
+	Person* backToPerson = objserialization::ObjectSerializer::deserialize<Person>(serializedPerson, objserialization::ArchiveType::TEXT);
 
 	delete p;
 	delete backToPerson;
@@ -66,8 +67,8 @@ void main()
 void main()
 {
 	Person *p = new Person("jack", 23);
-	std::string serializedPerson =  objserialization::ObjectSerializer::serialize(p);
-	Person* backToPerson = static_cast<Person*>(objserialization::ObjectSerializer::deserialize(serializedPerson));
+	std::string serializedPerson =  objserialization::ObjectSerializer::serialize(p, objserialization::ArchiveType::BINARY);
+	Person* backToPerson = static_cast<Person*>(objserialization::ObjectSerializer::deserialize(serializedPerson, objserialization::ArchiveType::BINARY));
 
 	delete p;
 	delete backToPerson;
@@ -77,24 +78,24 @@ void main()
 void main()
 {
 	std::shared_ptr<Person> p = std::make_shared<Person>("jack", 23);
-	std::string serializedPerson =  objserialization::ObjectSerializer::serialize(p);
-	std::shared_ptr<Person> backToPerson(objserialization::ObjectSerializer::deserialize<Person>(serializedPerson));
+	std::string serializedPerson =  objserialization::ObjectSerializer::serialize(p, objserialization::ArchiveType::BINARY);
+	std::shared_ptr<Person> backToPerson(objserialization::ObjectSerializer::deserialize<Person>(serializedPerson, objserialization::ArchiveType::BINARY));
 }
 ```
 ```cpp
 void main()
 {
 	std::unique_ptr<Person> p = std::make_unique<Person>("jack", 23);
-	std::string serializedPerson =  objserialization::ObjectSerializer::serialize(p);
-	std::unique_ptr<Person> backToPerson(objserialization::ObjectSerializer::deserialize<Person>(serializedPerson));
+	std::string serializedPerson =  objserialization::ObjectSerializer::serialize(p, objserialization::ArchiveType::TEXT);
+	std::unique_ptr<Person> backToPerson(objserialization::ObjectSerializer::deserialize<Person>(serializedPerson, objserialization::ArchiveType::TEXT));
 }
 ```
 ```cpp
 void main()
 {
 	std::shared_ptr<Person> p = std::make_shared<Person>("jack", 23);
-	std::string serializedPerson =  objserialization::ObjectSerializer::serialize(p);
-	std::shared_ptr<objserialization::BaseObject> backToBase(objserialization::ObjectSerializer::deserialize(serializedPerson));
+	std::string serializedPerson =  objserialization::ObjectSerializer::serialize(p, objserialization::ArchiveType::BINARY);
+	std::shared_ptr<objserialization::BaseObject> backToBase(objserialization::ObjectSerializer::deserialize(serializedPerson), objserialization::ArchiveType::BINARY);
 	std::shared_ptr<Person> backToPerson = std::static_pointer_cast<Person>(std::move(backToBase));
 }
 ```
