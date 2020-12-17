@@ -29,18 +29,19 @@ void main()
 	Person* p = new Person("jack", 23);
 	
 	//Text
-	{
-		std::string serializedPerson = objserialization::ObjectSerializer::serialize(p, objserialization::ArchiveType::TEXT);
-		Person* backToPerson = objserialization::ObjectSerializer::deserialize<Person>(serializedPerson, objserialization::ArchiveType::TEXT);
-		delete backToPerson;
-	}
+	
+	std::string serializedPerson = objserialization::ObjectSerializer::serialize(p, objserialization::ArchiveType::TEXT);
+	Person* backToPerson = objserialization::ObjectSerializer::deserialize<Person>(serializedPerson, objserialization::ArchiveType::TEXT);
+	
 
 	//Binary
-	{
-		std::string serializedPerson = objserialization::ObjectSerializer::serialize(p, objserialization::ArchiveType::BINARY);
-		Person* backToPerson = objserialization::ObjectSerializer::deserialize<Person>(serializedPerson, objserialization::ArchiveType::BINARY);
-		delete backToPerson;
-	}
+	
+	std::string serializedPerson2 = objserialization::ObjectSerializer::serialize(p, objserialization::ArchiveType::BINARY);
+	Person* backToPerson2 = objserialization::ObjectSerializer::deserialize<Person>(serializedPerson2, objserialization::ArchiveType::BINARY);
+	delete backToPerson2;
+	
 
-	delete p;
+	delete p; 
+	delete backToPerson;
+	delete backToPerson2;
 }
