@@ -43,8 +43,8 @@ protected:
 	unsigned int _age;
 
 public:
-	Person(const std::string name = "", unsigned int age = 0)
-		: BaseObject(objserialization::getObjectType<Person>()), _name(name), _age(age)
+	Person(const std::string name = "", unsigned int age = 0, objserialization::objType type = objserialization::getObjectType<Person>())
+		: BaseObject(type), _name(name), _age(age)
 	{}
 };
 
