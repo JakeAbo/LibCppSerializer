@@ -4,7 +4,7 @@ new classes which will easily be serialized and deserialized.
 The library provides fast runtime serialization using templates, lambdas and macros using C++ 17.
 
 ----
-*Author*:      [Jack Abulafia](https://www.linkedin.com/in/jack-abulafia-463a23199/)
+*Author*:      [Jack Abulafia](https://www.linkedin.com/in/jackabu/)
 
 ## Dependencies
 This library requires use of boost/serialization which can be obtained from:
